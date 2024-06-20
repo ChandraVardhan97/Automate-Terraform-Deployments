@@ -1,3 +1,5 @@
+# Define the public key variable
+
 variable "public_key" {
   description = "Public key for SSH access"
   type        = string
