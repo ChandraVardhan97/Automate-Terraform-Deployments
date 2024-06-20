@@ -1,6 +1,9 @@
 # Replace the post stage in the Jenkinsfile with the below post stage for verbose build information in the email notifications
 
   post {
+        always {
+            cleanWs()
+        }
     success {
         script {
             def changes = currentBuild.changeSets.collect { cs ->
