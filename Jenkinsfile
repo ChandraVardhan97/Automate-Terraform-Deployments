@@ -40,12 +40,12 @@ post {
             cleanWs()
         }
         success {
-            mail to: 'aspprodman@gmail.com',
+            mail to: 'Prod Man <aspprodman@gmail.com>',
                  subject: "Jenkins Pipeline Success: ${currentBuild.fullDisplayName}",
                  body: "The Jenkins pipeline ${env.JOB_NAME} (${env.BUILD_NUMBER}) has completed successfully. \n\nView the log at: ${env.BUILD_URL}"
         }
         failure {
-            mail to: 'aspprodman@gmail.com',
+            mail to: 'Prod Man <aspprodman@gmail.com>',
                  subject: "Jenkins Pipeline Failure: ${currentBuild.fullDisplayName}",
                  body: "The Jenkins pipeline ${env.JOB_NAME} (${env.BUILD_NUMBER}) has failed. \n\nView the log at: ${env.BUILD_URL}"
         }
