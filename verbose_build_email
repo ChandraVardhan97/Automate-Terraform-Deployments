@@ -1,0 +1,60 @@
+# Replace the post stage in the Jenkinsfile with the below post stage for verbose build information in the email notifications
+
+  post {
+    success {
+        script {
+            def changes = currentBuild.changeSets.collect { cs ->
+                cs.items.collect { item ->
+                    "- ${item.author.fullName}: ${item.msg}"
+                }.join('\n')
+            }.join('\n')
+
+            mail to: 'aspprodman@gmail.com',
+                 subject: "Jenkins Pipeline Success: ${currentBuild.fullDisplayName}",
+                 body: """
+The Jenkins pipeline ${env.JOB_NAME} (${env.BUILD_NUMBER}) has completed successfully.
+
+Build Details:
+- Duration: ${currentBuild.durationString}
+- Start Time: ${new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd HH:mm:ss")}
+- End Time: ${new Date(currentBuild.timeInMillis).format("yyyy-MM-dd HH:mm:ss")}
+- Triggered by: ${currentBuild.getBuildCauses()[0].shortDescription}
+
+Changes in this build:
+${changes}
+
+Environment:
+- Node: ${env.NODE_NAME}
+- Workspace: ${env.WORKSPACE}
+
+View the full log at: ${env.BUILD_URL}
+"""
+        }
+    }
+    failure {
+        script {
+            def failureReason = currentBuild.result == 'FAILURE' ? currentBuild.getLog(50).join('\n') : 'Unknown'
+            
+            mail to: 'aspprodman@gmail.com',
+                 subject: "Jenkins Pipeline Failure: ${currentBuild.fullDisplayName}",
+                 body: """
+The Jenkins pipeline ${env.JOB_NAME} (${env.BUILD_NUMBER}) has failed.
+
+Build Details:
+- Duration: ${currentBuild.durationString}
+- Start Time: ${new Date(currentBuild.startTimeInMillis).format("yyyy-MM-dd HH:mm:ss")}
+- End Time: ${new Date(currentBuild.timeInMillis).format("yyyy-MM-dd HH:mm:ss")}
+- Triggered by: ${currentBuild.getBuildCauses()[0].shortDescription}
+
+Failure Reason:
+${failureReason}
+
+Environment:
+- Node: ${env.NODE_NAME}
+- Workspace: ${env.WORKSPACE}
+
+View the full log at: ${env.BUILD_URL}
+"""
+        }
+    }
+}
