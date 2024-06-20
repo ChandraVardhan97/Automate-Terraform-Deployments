@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/myorg/terraform-ec2.git'
+                git branch: 'master', url: 'https://github.com/myorg/terraform-ec2.git', credentialsId: 'github-pat'
             }
         }
 
