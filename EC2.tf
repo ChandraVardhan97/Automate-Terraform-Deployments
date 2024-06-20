@@ -1,3 +1,7 @@
+variable "public_key" {
+  description = "Public key for SSH access"
+  type        = string
+}
 
 # Create a VPC
 resource "aws_vpc" "my_vpc" {
@@ -72,7 +76,7 @@ resource "aws_security_group" "my_sg" {
 
 resource "aws_key_pair" "my_key" {
   key_name = "my_key"
-  public_key = file("/home/ubuntu/Terraform/my_key.pub")
+  public_key = var.public_key
 }
 
 # Create an EC2 instance within the VPC
