@@ -6,6 +6,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('c4b408ff-65e8-4b24-9d7f-9091ddb505fb')
         AWS_SECRET_ACCESS_KEY = credentials('c4b408ff-65e8-4b24-9d7f-9091ddb505fb')
+        PUBLIC_KEY            = credentials('mykey_pub')
     }
 
     stages {
