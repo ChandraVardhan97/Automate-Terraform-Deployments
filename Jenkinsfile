@@ -24,13 +24,13 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan'
+                sh 'terraform plan -var="public_key=$PUBLIC_KEY"'
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply --auto-approve'
+                sh 'terraform apply --auto-approve -var="public_key=$PUBLIC_KEY"'
             }
         }
     }
